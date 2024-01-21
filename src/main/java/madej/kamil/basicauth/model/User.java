@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 @RequiredArgsConstructor
 @Getter
 @Setter
@@ -23,6 +26,12 @@ public class User {
     private String username;
 
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 
 }
