@@ -1,17 +1,12 @@
 package madej.kamil.basicauth.config;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,10 +27,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) ->{
-                    auth.requestMatchers("/api/home/noAuth").permitAll();
-                    auth.requestMatchers("/api/home/user").hasRole("ROLE_USER");
-                    auth.requestMatchers("/api/home/admin").hasRole("ROLE_ADMIN");
-                    auth.anyRequest().authenticated();
+                    auth.requestMatchers(HttpMethod.GET,"/api/home/user/**").hasAuthority("USER");
+                    auth.requestMatchers(HttpMethod.GET,"/api/home/admin/**").hasAuthority("ADMIN");
+                    auth.requestMatchers(HttpMethod.GET,"/api/home/noAuth/**").permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
