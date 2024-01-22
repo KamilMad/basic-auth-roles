@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/home")
 public class HomeController {
 
-    @GetMapping("/Auth")
-    public String helloWorld() {
-        return "Hello authenticated user";
+    @GetMapping("/noAuth")
+    public String helloAuthentication() {
+        return "Hello unauthenticated user";
     }
 
-    @GetMapping("/noAuth")
-    public String noAuthHello() {
-        return "Hello unauthenticated user";
+    @GetMapping("/user")
+    public String helloUser() {
+        return "Hello User";
+    }
+
+    @GetMapping("/admin")
+    public String helloAdmin() {
+        return "Hello Admin";
     }
 }

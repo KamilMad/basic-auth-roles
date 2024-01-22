@@ -33,6 +33,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) ->{
                     auth.requestMatchers("/api/home/noAuth").permitAll();
+                    auth.requestMatchers("/api/home/user").hasRole("ROLE_USER");
+                    auth.requestMatchers("/api/home/admin").hasRole("ROLE_ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())

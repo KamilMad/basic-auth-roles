@@ -1,4 +1,4 @@
-package madej.kamil.basicauth.model;
+package madej.kamil.basicauth.payload;
 
 public record UserLogin(String username, String password) {
 }
